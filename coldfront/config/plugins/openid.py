@@ -21,7 +21,8 @@ if ENV.bool('PLUGIN_MOKEY', default=False):
     ]
 else:
     AUTHENTICATION_BACKENDS += [
-        'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+        #'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+        'coldfront.addons.username.MyOIDCAB',
     ]
 
 MIDDLEWARE += [
