@@ -98,10 +98,23 @@ AUTHENTICATION_BACKENDS = []
 # Django Q
 #------------------------------------------------------------------------------
 Q_CLUSTER = {
-    'timeout': ENV.int('Q_CLUSTER_TIMEOUT', default=120),
-    'retry': ENV.int('Q_CLUSTER_RETRY', default=120),
+    'timeout': 3600,
+    'retry': 0,
+    'scheduler': True,  # Enable scheduled task execution
+    'orm': 'default',   # Use database instead of Redis
+    'workers': 1,
+    'catch_up': False,
 }
 
+#------------------------------------------------------------------------------
+# Django Cache - Database Cache for persistent storage
+#------------------------------------------------------------------------------
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table',
+    }
+}
 
 #------------------------------------------------------------------------------
 # Django template and site settings

@@ -23,3 +23,14 @@ class Command(BaseCommand):
         schedule('coldfront.core.allocation.tasks.send_expiry_emails',
                  schedule_type=Schedule.DAILY,
                  next_run=date)
+
+        # LDAP sync every hour
+        schedule(
+            'coldfront.plugins.ldap_write.tasks.sync_ldap_users_task',
+            name='LDAP User Sync - Hourly',
+            schedule_type=Schedule.HOURLY,
+            repeats=-1,
+            next_run=timezone.now() + timezone.timedelta(hours=1)
+        )
+
+        self.stdout.write(self.style.SUCCESS('Successfully added scheduled tasks'))
