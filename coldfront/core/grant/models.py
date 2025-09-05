@@ -49,19 +49,19 @@ class GrantStatusChoice(TimeStampedModel):
     def natural_key(self):
         return [self.name]
     
-class MoneyField(models.CharField):
-    validators = [
-        RegexValidator(r'\$*[\d,.]{1,}$',
-                        'Enter only digits, decimals, commas, dollar signs, or spaces.',
-                        'Invalid input.')
-    ]
+class MoneyField(models.DecimalField):
     def to_python(self, value):
-        value = super().to_python(value)
-        if value:
-            value = value.replace(" ", "")
-            value = value.replace(",", "")
-            value = value.replace("$", "")
-        return value
+        if value is None:
+            return value
+        try:
+            from decimal import Decimal, InvalidOperation
+            if isinstance(value, Decimal):
+                return value
+            # Edge case where value is a string
+            value = str(value).replace("$", "").replace(",", "").strip()
+            return Decimal(value)
+        except (InvalidOperation, ValueError):
+            raise models.ValidationError(self.error_messages['invalid'])
         
 class PercentField(models.CharField):
     validators = [
@@ -123,8 +123,8 @@ class Grant(TimeStampedModel):
     grant_start = models.DateField('Grant Start Date')
     grant_end = models.DateField('Grant End Date')
     percent_credit = PercentField(max_length=100, validators=[MaxValueValidator(100)])
-    direct_funding = MoneyField(max_length=100)
-    total_amount_awarded = MoneyField(max_length=100)
+    direct_funding = MoneyField(max_digits=19, decimal_places=2)
+    total_amount_awarded = MoneyField(max_digits=19, decimal_places=2)
     status = models.ForeignKey(GrantStatusChoice, on_delete=models.CASCADE)
     history = HistoricalRecords()
 

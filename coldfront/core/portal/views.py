@@ -89,7 +89,7 @@ def center_summary(request):
         ele['funding_agency__name'],
         intcomma(int(ele['total_amount'])),
         total_grants_by_agency_count[ele['funding_agency__name']]
-    ), ele['total_amount']] for ele in total_grants_by_agency_sum]
+    ), float(ele['total_amount'])] for ele in total_grants_by_agency_sum]
 
     total_grants_by_agency = sorted(
         total_grants_by_agency, key=operator.itemgetter(1), reverse=True)
