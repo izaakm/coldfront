@@ -33,13 +33,14 @@ _patterns = [
     path("project/", include("coldfront.core.project.urls")),
     path("allocation/", include("coldfront.core.allocation.urls")),
     path("resource/", include("coldfront.core.resource.urls")),
-]
-
-
-# CUSTOM: weeklyreports plugin
-urlpatterns += [
     path('weeklyreportapp/', include('weeklyreportapp.urls')),
 ]
+
+
+# # CUSTOM: weeklyreports plugin
+# urlpatterns += [
+#     path('weeklyreportapp/', include('weeklyreportapp.urls')),
+# ]
 
 if settings.GRANT_ENABLE:
     _patterns.append(path("grant/", include("coldfront.core.grant.urls")))
