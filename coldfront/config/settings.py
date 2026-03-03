@@ -32,6 +32,10 @@ plugin_configs = {
     "PLUGIN_PROJECT_OPENLDAP": "plugins/project_openldap.py",
 }
 
+# CUSTOM: weeklyreports plugin
+plugin_configs['PLUGIN_WEEKLYREPORTAPP'] = 'plugins/weeklyreportapp.py'
+
+
 # This allows plugins to be enabled via environment variables. Can alternatively
 # add the relevant configs to local_settings.py
 for key, pc in plugin_configs.items():
