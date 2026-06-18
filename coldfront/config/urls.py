@@ -33,14 +33,9 @@ _patterns = [
     path("project/", include("coldfront.core.project.urls")),
     path("allocation/", include("coldfront.core.allocation.urls")),
     path("resource/", include("coldfront.core.resource.urls")),
-    path('weeklyreportapp/', include('weeklyreportapp.urls')),
+    # path('weeklyreportapp/', include('weeklyreportapp.urls')),
 ]
 
-
-# # CUSTOM: weeklyreports plugin
-# urlpatterns += [
-#     path('weeklyreportapp/', include('weeklyreportapp.urls')),
-# ]
 
 if settings.GRANT_ENABLE:
     _patterns.append(path("grant/", include("coldfront.core.grant.urls")))
@@ -67,6 +62,11 @@ if "django_su.backends.SuBackend" in settings.AUTHENTICATION_BACKENDS:
     _patterns.append(path("su/", include("django_su.urls")))
 
 urlpatterns = [path(settings.BASE_PATH, include(_patterns))]
+
+# CUSTOM: weeklyreports plugin
+urlpatterns += [
+    path('weeklyreportapp/', include('weeklyreportapp.urls')),
+]
 
 
 def export_as_json(modeladmin, request, queryset):

@@ -34,6 +34,7 @@ plugin_configs = {
 
 # CUSTOM: weeklyreports plugin
 plugin_configs['PLUGIN_WEEKLYREPORTAPP'] = 'plugins/weeklyreportapp.py'
+plugin_configs['PLUGIN_LDAP_USER_PROFILE'] = 'plugins/ldap_user_profile.py'
 
 
 # This allows plugins to be enabled via environment variables. Can alternatively
